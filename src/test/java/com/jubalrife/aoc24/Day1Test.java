@@ -24,7 +24,7 @@ class Day1Test {
                         "3   9\n" +
                         "3   3"
         ));
-        assertEquals(distance, 11);
+        assertEquals(11, distance);
     }
 
     @Test
@@ -37,6 +37,6 @@ class Day1Test {
                         "3   9\n" +
                         "3   3"
         ));
-        assertEquals(similarityScore, 31);
+        assertEquals(31, similarityScore);
     }
 }
