@@ -14,7 +14,7 @@ public class Day2SafeListRuleset {
     }
 
     public Integer calculateSafeRowsWithDampener(String content) {
-        return countRows(content, row->{
+        return countRows(content, row -> {
             boolean safe = false;
             for (int i = 0; i < row.size(); i++) {
                 safe = safe | isRowSafe(cloneRowWithoutIndex(row, i));
@@ -23,7 +23,7 @@ public class Day2SafeListRuleset {
         });
     }
 
-    private int countRows(String content, Function<List<Integer>, Boolean> rules){
+    private int countRows(String content, Function<List<Integer>, Boolean> rules) {
         int safeCount = 0;
         String[] lines = content.split("\n");
         for (String line : lines) {

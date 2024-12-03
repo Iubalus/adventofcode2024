@@ -19,6 +19,11 @@ public class Main {
         System.out.println("Day 2 Part 2: " + new Day2SafeListRuleset().calculateSafeRowsWithDampener(d2));
         //213
         //285
+
+        String d3 = Files.readString(new File("./input/day3.txt").toPath());
+        System.out.println("Day 3 Part 1: " + new Day3ChoosyCalculator().multiply(d3));
+        //184576302
+
     }
 
 }
