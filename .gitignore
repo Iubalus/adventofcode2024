@@ -1,0 +1,6 @@
+.idea/*
+.gradle/*
+build/*
+input/*
+gradle/*
+/adventofcode2024.iml
