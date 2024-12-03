@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
-class Day1 {
+//https://adventofcode.com/2024/day/1
+class Day1ListComparison {
     public SortedLists extract(String rawContent) {
         List<Integer> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();

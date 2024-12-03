@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Day1Test {
+class Day1ListComparisonTest {
 
-    private Day1 day1;
+    private Day1ListComparison day1;
 
     @BeforeEach
     void setUp() {
-        day1 = new Day1();
+        day1 = new Day1ListComparison();
     }
 
     @Test
