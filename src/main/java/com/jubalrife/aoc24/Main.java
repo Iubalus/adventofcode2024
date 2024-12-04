@@ -28,7 +28,9 @@ public class Main {
 
         String d4 = Files.readString(new File("./input/day4.txt").toPath());
         System.out.println("Day 4 Part 1: " + new Day4WordSearch().xmasCounter(d4));
+        System.out.println("Day 4 Part 2: " + new Day4WordSearch().xOfMasCounter(d4));
         //2613
+        //1905
 
     }
 

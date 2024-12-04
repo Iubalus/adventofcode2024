@@ -18,6 +18,42 @@ public class Day4WordSearch {
         return count;
     }
 
+    public Integer xOfMasCounter(String input) {
+        List<String> lines = Stream.of(input.split("\n")).map(String::trim).collect(Collectors.toList());
+        int count = 0;
+        for (int y = 0; y < lines.size(); y++) {
+            for (int x = 0; x < lines.get(y).length(); x++) {
+                count += scanMas(x, y, lines);
+            }
+        }
+        return count;
+    }
+
+    public Integer scanMas(Integer x, Integer y, List<String> lines) {
+        if (lines.get(y).charAt(x) == 'A') {
+            if (y - 1 >= 0 && y + 1 < lines.size() && x - 1 >= 0 && x + 1 < lines.get(0).length()) {
+                boolean diag1 = false;
+                if (lines.get(y - 1).charAt(x - 1) == 'M' && lines.get(y + 1).charAt(x + 1) == 'S') {
+                    diag1 = true;
+                }
+                if (lines.get(y - 1).charAt(x - 1) == 'S' && lines.get(y + 1).charAt(x + 1) == 'M') {
+                    diag1 = true;
+                }
+                boolean diag2 = false;
+                if (lines.get(y + 1).charAt(x - 1) == 'M' && lines.get(y - 1).charAt(x + 1) == 'S') {
+                    diag2 = true;
+                }
+                if (lines.get(y + 1).charAt(x - 1) == 'S' && lines.get(y - 1).charAt(x + 1) == 'M') {
+                    diag2 = true;
+                }
+                if (diag1 && diag2) {
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+
     public Integer scan(Integer x, Integer y, List<String> lines) {
         int count = 0;
         if (lines.get(y).charAt(x) == 'X') {
