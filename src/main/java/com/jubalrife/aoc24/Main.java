@@ -25,6 +25,11 @@ public class Main {
         System.out.println("Day 3 Part 2: " + new Day3ChoosyCalculator().multiplySelectively(d3));
         //184576302
         //118173507
+
+        String d4 = Files.readString(new File("./input/day4.txt").toPath());
+        System.out.println("Day 4 Part 1: " + new Day4WordSearch().xmasCounter(d4));
+        //2613
+
     }
 
 }
