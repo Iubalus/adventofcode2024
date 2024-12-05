@@ -32,6 +32,11 @@ public class Main {
         //2613
         //1905
 
+        String d5 = Files.readString(new File("./input/day5.txt").toPath());
+        System.out.println("Day 5 Part 1: " + new Day5().doOperation(d5));
+        System.out.println("Day 5 Part 2: " + new Day5().doOperation2(d5));
+        //5651
+        //4743
     }
 
 }
