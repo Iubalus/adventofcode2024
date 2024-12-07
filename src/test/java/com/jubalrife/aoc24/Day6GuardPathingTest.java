@@ -2,6 +2,9 @@ package com.jubalrife.aoc24;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day6GuardPathingTest {
@@ -9,16 +12,21 @@ class Day6GuardPathingTest {
     @Test
     void testWalkPath() {
         String result = new Day6GuardPathing().walkPath(
-                "....#.....\n" +
-                        ".........#\n" +
-                        "..........\n" +
-                        "..#.......\n" +
-                        ".......#..\n" +
-                        "..........\n" +
-                        ".#..^.....\n" +
-                        "........#.\n" +
-                        "#.........\n" +
-                        "......#..."
+                Arrays
+                        .stream(("....#.....\n" +
+                                                ".........#\n" +
+                                                "..........\n" +
+                                                "..#.......\n" +
+                                                ".......#..\n" +
+                                                "..........\n" +
+                                                ".#..^.....\n" +
+                                                "........#.\n" +
+                                                "#.........\n" +
+                                                "......#...").split("\n"))
+                        .map(String::trim)
+                        .map(String::toCharArray)
+                        .collect(Collectors.toList())
+                        .toArray(new char[][]{})
         );
         assertEquals(
                 "....#.....\n" +

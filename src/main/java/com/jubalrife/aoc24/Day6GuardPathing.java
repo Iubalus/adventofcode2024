@@ -9,7 +9,7 @@ public class Day6GuardPathing {
 
     public Integer countStepsInPath(String content) {
         int count = 0;
-        for (char c : walkPath(content).toCharArray()) {
+        for (char c : walkPath(toCharMatrix(content)).toCharArray()) {
             if (c == 'X') {
                 count++;
             }
@@ -17,13 +17,16 @@ public class Day6GuardPathing {
         return count;
     }
 
-    public String walkPath(String s) {
-        char[][] lines = Arrays
-                .stream(s.split("\n"))
+    private static char[][] toCharMatrix(String content) {
+        return Arrays
+                .stream(content.split("\n"))
                 .map(String::trim)
                 .map(String::toCharArray)
                 .collect(Collectors.toList())
                 .toArray(new char[][]{});
+    }
+
+    public String walkPath(char[][] lines) {
         int x = 0;
         int y = 0;
         Direction currentDirection = Direction.NORTH;
@@ -41,7 +44,12 @@ public class Day6GuardPathing {
         turns.put(Direction.EAST, Direction.SOUTH);
         turns.put(Direction.SOUTH, Direction.WEST);
         turns.put(Direction.WEST, Direction.NORTH);
+        int stuckDetection = 0;
         while (!currentDirection.isOffMap(x, y, lines)) {
+            stuckDetection++;
+            if (stuckDetection > 10000) {
+                throw new RuntimeException("I'm stuck");
+            }
             if (currentDirection.isPathFree(x, y, lines)) {
                 x = currentDirection.movX(x);
                 y = currentDirection.movY(y);
@@ -51,6 +59,23 @@ public class Day6GuardPathing {
             }
         }
         return Arrays.stream(lines).map(String::new).collect(Collectors.joining("\n"));
+    }
+
+    public Integer countStepsInPathWithObstacle(String d6) {
+        int stuck = 0;
+        char[][] charMatrix = toCharMatrix(d6);
+        for (int y = 0; y < charMatrix.length; y++) {
+            for (int x = 0; x < charMatrix[y].length; x++) {
+                char[][] copy = toCharMatrix(d6);
+                copy[y][x] = '#';
+                try {
+                    walkPath(copy);
+                } catch(RuntimeException e){
+                    stuck++;
+                }
+            }
+        }
+        return stuck;
     }
 
     public enum Direction {

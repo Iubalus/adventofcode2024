@@ -40,9 +40,9 @@ public class Main {
 
         String d6 = Files.readString(new File("./input/day6.txt").toPath());
         System.out.println("Day 6 Part 1: " + new Day6GuardPathing().countStepsInPath(d6));
-        System.out.println("Day 6 Part 2: " + new Day6GuardPathing().countStepsInPath(d6));
-        //97
-        //
+        System.out.println("Day 6 Part 2: " + new Day6GuardPathing().countStepsInPathWithObstacle(d6));
+        //5242
+        //1424
     }
 
 }
