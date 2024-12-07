@@ -43,6 +43,12 @@ public class Main {
         System.out.println("Day 6 Part 2: " + new Day6GuardPathing().countStepsInPathWithObstacle(d6));
         //5242
         //1424
+
+        String d7 = Files.readString(new File("./input/day7.txt").toPath());
+        System.out.println("Day 7 Part 1: " + new Day7BridgeRepair().computeCalibration(d7));
+        System.out.println("Day 7 Part 2: " + new Day7BridgeRepair().computeCalibration(d7));
+        //10741443549536
+        //
     }
 
 }
