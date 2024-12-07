@@ -37,6 +37,12 @@ public class Main {
         System.out.println("Day 5 Part 2: " + new Day5PageOrdering().sumMiddlePagesOfCorrectedPrintOrders(d5));
         //5651
         //4743
+
+        String d6 = Files.readString(new File("./input/day6.txt").toPath());
+        System.out.println("Day 6 Part 1: " + new Day6GuardPathing().countStepsInPath(d6));
+        System.out.println("Day 6 Part 2: " + new Day6GuardPathing().countStepsInPath(d6));
+        //97
+        //
     }
 
 }
