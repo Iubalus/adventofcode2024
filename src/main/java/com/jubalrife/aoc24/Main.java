@@ -45,10 +45,10 @@ public class Main {
         //1424
 
         String d7 = Files.readString(new File("./input/day7.txt").toPath());
-        System.out.println("Day 7 Part 1: " + new Day7BridgeRepair().computeCalibration(d7));
-        System.out.println("Day 7 Part 2: " + new Day7BridgeRepair().computeCalibration(d7));
+        System.out.println("Day 7 Part 1: " + new Day7BridgeRepair().computeCalibration(d7, Day7BridgeRepair.Operator.MULT));
+        System.out.println("Day 7 Part 2: " + new Day7BridgeRepair().computeCalibration(d7, Day7BridgeRepair.Operator.CONCAT));
         //10741443549536
-        //
+        //500335179214836
     }
 
 }

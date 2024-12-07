@@ -3,11 +3,12 @@ package com.jubalrife.aoc24;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 public class Day7BridgeRepair {
 
-    public BigInteger computeCalibration(String content) {
+    public BigInteger computeCalibration(String content, Operator maxOperator) {
         List<List<BigInteger>> rows = Arrays
                 .stream(content.replace(":", "").split("\n"))
                 .map(s -> Arrays.stream(s.split(" "))
@@ -17,72 +18,42 @@ public class Day7BridgeRepair {
                 .collect(Collectors.toList());
         BigInteger total = new BigInteger("0");
         for (List<BigInteger> row : rows) {
-            if (isEquationViable(row.get(0), row.subList(1, row.size()))) {
+            if (isEquationViable(row.get(0), row.subList(1, row.size()), maxOperator)) {
                 total = total.add(row.get(0));
             }
         }
         return total;
     }
 
-    private static void increment(int ind, char[] source) {
+    private static void increment(int ind, char[] source, Operator maxOperator) {
         if (ind >= source.length) {
             return;
         }
-        if (source[ind] == '+') {
-            source[ind] = '*';
+        Operator op = Operator.forSymbol(source[ind]);
+        if (op.ordinal() < maxOperator.ordinal()) {
+            source[ind] = op.getIncrement();
             return;
         }
         source[ind] = '+';
-        increment(ind + 1, source);
+        increment(ind + 1, source, maxOperator);
     }
 
-    public boolean isEquationViable(BigInteger result, List<BigInteger> args) {
+    public boolean isEquationViable(BigInteger result, List<BigInteger> args, Operator maxOperator) {
         char[] operators = new char[args.size() - 1];
         Arrays.fill(operators, '+');
-        for (int i = 0; i < Math.pow(2, operators.length); i++) {
-            /*
-             * They didn't honor order of operations so to solve the puzzle I have to do math incorrectly :/
-             * Sample says this is valid "292: 11 6 16 20 can be solved in exactly one way: 11 + 6 * 16 + 20"
-             * When in fact that would equal 11 + (6 *16) + 20 = 127 which is not 292.
-            List<BigInteger> results = new ArrayList<>();
-            BigInteger current = null;
-            for (int j = 0; j < operators.length; j++) {
-                if (operators[j] == '*') {
-                    if (current == null) {
-                        current = args.get(j);
-                    }
-                    current = current.multiply(args.get(j + 1));
-                } else {
-                    if (current != null) {
-                        results.add(current);
-                        current = null;
-                    } else {
-                        results.add(args.get(j));
-                    }
-                }
-            }
-            if (current != null) {
-                results.add(current);
-            } else {
-                results.add(args.get(args.size() - 1));
-            }
-            BigInteger total = results.stream().reduce(BigInteger.ZERO, BigInteger::add);
-            */
+        long supportedOperators = Arrays.stream(Operator.values()).filter(v -> v.ordinal() <= maxOperator.ordinal()).count();
+        for (int i = 0; i < Math.pow(supportedOperators, operators.length); i++) {
             BigInteger total = args.get(0);
             for (int j = 0; j < operators.length; j++) {
-                if (operators[j] == '+') {
-                    total = total.add(args.get(j + 1));
-                } else {
-                    total = total.multiply(args.get(j + 1));
-                }
+                total = Operator.forSymbol(operators[j]).apply(total, args.get(j + 1));
             }
-            //printFormula(result, args, operators);
+//            printFormula(result, args, operators);
             if (total.equals(result)) {
-                //System.out.println(" TRUE");
+//                System.out.println(" TRUE");
                 return true;
             }
-            //System.out.println(" FALSE =" + total);
-            increment(0, operators);
+//            System.out.println(" FALSE =" + total);
+            increment(0, operators, maxOperator);
         }
         return false;
     }
@@ -97,5 +68,37 @@ public class Day7BridgeRepair {
         }
         out.append(args.get(args.size() - 1));
         System.out.print(out);
+    }
+
+    public enum Operator {
+        ADD('+', BigInteger::add, '*'),
+        MULT('*', BigInteger::multiply, '|'),
+        CONCAT('|', (l, r) -> new BigInteger(l.toString() + r.toString()), '+');
+        private final char symbol;
+        private final BiFunction<BigInteger, BigInteger, BigInteger> operation;
+        private final char increment;
+
+        Operator(char symbol, BiFunction<BigInteger, BigInteger, BigInteger> operation, char increment) {
+            this.symbol = symbol;
+            this.operation = operation;
+            this.increment = increment;
+        }
+
+        BigInteger apply(BigInteger left, BigInteger right) {
+            return this.operation.apply(left, right);
+        }
+
+        public char getIncrement() {
+            return increment;
+        }
+
+        public static Operator forSymbol(char c) {
+            for (Operator o : Operator.values()) {
+                if (o.symbol == c) {
+                    return o;
+                }
+            }
+            throw new RuntimeException("No such operator");
+        }
     }
 }
